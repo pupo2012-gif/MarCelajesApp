@@ -56,7 +56,7 @@ export default function Page() {
       { id: "corvina_clase_entera", name: "Corvina Clase Entera", price: 5600 },
       { id: "corvina_clase_fileteada", name: "Corvina Clase Fileteada", price: 9100 },
       { id: "pargo_entero_plato", name: "Pargo Entero para Plato", price: 8400 },
-      { id: "camaron_grande_entero", name: "Carmaron Grande Entero", price: 14000 },
+      { id: "camaron_grande_entero", name: "Camaron Grande Entero", price: 14000 },
     ];
   }, []);
 
