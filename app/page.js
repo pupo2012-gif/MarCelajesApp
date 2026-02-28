@@ -51,12 +51,12 @@ export default function Page() {
 
   const products = useMemo(function () {
     return [
-      { id: "corvina_pp_entera", name: "Corvina PP Entera", price: 10000 },
-      { id: "corvina_pp_fileteada", name: "Corvina PP Fileteada", price: 13300 },
-      { id: "corvina_clase_entera", name: "Corvina Clase Entera", price: 23300 },
-      { id: "corvina_clase_fileteada", name: "Corvina Clase Fileteada", price: 23300 },
-      { id: "pargo_entero_plato", name: "Pargo Entero para Plato", price: 23300 },
-      { id: "camaron_grande_entero", name: "Carmaron Grande Entero", price: 23300 },
+      { id: "corvina_pp_entera", name: "Corvina PP Entera", price: 7000 },
+      { id: "corvina_pp_fileteada", name: "Corvina PP Fileteada", price: 11200 },
+      { id: "corvina_clase_entera", name: "Corvina Clase Entera", price: 5600 },
+      { id: "corvina_clase_fileteada", name: "Corvina Clase Fileteada", price: 9100 },
+      { id: "pargo_entero_plato", name: "Pargo Entero para Plato", price: 8400 },
+      { id: "camaron_grande_entero", name: "Carmaron Grande Entero", price: 14000 },
     ];
   }, []);
 
