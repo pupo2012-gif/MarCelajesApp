@@ -66,7 +66,7 @@ export default function Page() {
       { id: "corvina_pp_filete", name: "Corvina PP Filete", desc: "Fresca, fileteada", price: 11200, unit: "kg" },
       { id: "corvina_clase_entera", name: "Corvina Clase Entera", desc: "Fresca", price: 5600, unit: "kg" },
       { id: "corvina_clase_filete", name: "Corvina Clase Filete", desc: "Fresca, fileteada", price: 9100, unit: "kg" },
-      { id: "pargo_entero", name: "Pargo Entero para Plata", desc: "Fresco", price: 8400, unit: "kg" },
+      { id: "pargo_entero", name: "Pargo Entero para Plato", desc: "Fresco", price: 8400, unit: "kg" },
       { id: "camaron_grande_entero", name: "Camarón Grande Entero", desc: "Fresco", price: 14000, unit: "kg" }
     ];
   }, []);
@@ -196,12 +196,12 @@ export default function Page() {
     }
     if (deliveryDate < minDate) {
       if (waWindow && waWindow.close) waWindow.close();
-      setStatusMsg({ type: "err", text: "Fecha minima permitida: " + minDate });
+      setStatusMsg({ type: "err", text: "Fecha mínima permitida: " + minDate });
       return;
     }
     if (!cartLines || cartLines.length === 0) {
       if (waWindow && waWindow.close) waWindow.close();
-      setStatusMsg({ type: "err", text: "El carrito esta vacio." });
+      setStatusMsg({ type: "err", text: "El carrito esta vacío." });
       return;
     }
 
@@ -274,7 +274,7 @@ export default function Page() {
 
   function openCart() {
     if (cartLines.length === 0) {
-      setStatusMsg({ type: "err", text: "El carrito esta vacio." });
+      setStatusMsg({ type: "err", text: "El carrito esta vacío." });
       return;
     }
     setCartOpen(true);
@@ -300,7 +300,7 @@ export default function Page() {
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Buscar producto (corvina, pargo, camaron...)"
+            placeholder="Buscar producto (corvina, pargo, camarón...)"
           />
         </div>
       </div>
@@ -332,13 +332,13 @@ export default function Page() {
             />
             <input
               className="input"
-              placeholder="Telefono"
+              placeholder="Teléfono"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
             />
              <input
               className="input"
-              placeholder="Direccion"
+              placeholder="Dirección"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               style={{ gridColumn: "1 / -1" }}
