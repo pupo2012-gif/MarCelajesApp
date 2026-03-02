@@ -1,6 +1,6 @@
 export const runtime = "nodejs";
 
-const SHEETS_API_URL = "https://script.google.com/macros/s/AKfycbz8V9GSKCOcDPj01ixJCWeTYOYAdOdQVQmjq2PSWvQH9zStQeiW5yMLgjTFQKtfMiUp/exec";
+const SHEETS_API_URL = "https://script.google.com/macros/s/AKfycbxXEvEpgemQ6461RrrgrvCjGKkuutqCeQTC7nHSjjVirLDasR747npTiN6oZiLMp8BO/exec";
 const API_KEY = "MI_LLAVE_CELAJES_98765";
 
 export async function POST(req) {
