@@ -189,6 +189,11 @@ export default function Page() {
       setStatusMsg({ type: "err", text: "Falta el nombre del restaurante." });
       return;
     }
+    if (!address || !address.trim()) {
+      if (waWindow && waWindow.close) waWindow.close();
+      setStatusMsg({ type: "err", text: "Falta dirección." });
+      return;
+    }
     if (!deliveryDate) {
       if (waWindow && waWindow.close) waWindow.close();
       setStatusMsg({ type: "err", text: "Falta la fecha de entrega." });
@@ -294,6 +299,9 @@ export default function Page() {
             <h1>Mar Celajes</h1>
             <p>Sabores frescos del</p>
             <p>Golfo de Nicoya</p>
+            <p1>(Monteverde en proceso</p1>
+            <p1>de análisis=</p1>
+
           </div>
         </div>
         <div className="search">
@@ -338,7 +346,7 @@ export default function Page() {
             />
              <input
               className="input"
-              placeholder="Dirección"
+              placeholder="Dirección (requerido)"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               style={{ gridColumn: "1 / -1" }}
@@ -359,7 +367,7 @@ export default function Page() {
             />
             <textarea
               className="textarea"
-              placeholder="Notas (cortes, sustitutos, pago, etc.)"
+              placeholder="Notas (opciones de pago, etc.)"
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               style={{ gridColumn: "1 / -1" }}

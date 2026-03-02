@@ -72,6 +72,14 @@ body{
   overflow:hidden;
   text-overflow: ellipsis;
 }
+.brand p1{
+  margin:2px 0 0 0;
+  font-size: 12px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow:hidden;
+  text-overflow: ellipsis;
+}
 
 .search{
   max-width: 920px;
