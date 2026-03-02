@@ -46,8 +46,8 @@ body{
 }
 
 .logo{
-  width: 44px;
-  height: 44px;
+  width: 150px;
+  height: 150px;
   object-fit: contain;
   border-radius: 12px;
 }
@@ -57,16 +57,16 @@ body{
   min-width:0;
 }
 .brand h1{
-  font-size: 16px;
+  font-size: 24px;
   margin:0;
-  line-height: 1.1;
+  line-height: 1.8;
   white-space: nowrap;
   overflow:hidden;
   text-overflow: ellipsis;
 }
 .brand p{
   margin:2px 0 0 0;
-  font-size: 12px;
+  font-size: 16px;
   color: var(--muted);
   white-space: nowrap;
   overflow:hidden;
@@ -124,7 +124,7 @@ body{
   outline:none;
   background: #fff;
 }
-.textarea{ min-height: 92px; resize: vertical; }
+.textarea{ min-height: 60px; resize: vertical; }
 
 .helper{
   font-size: 12px;

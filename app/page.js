@@ -38,6 +38,7 @@ export default function Page() {
   const [restaurant, setRestaurant] = useState("");
   const [contactName, setContactName] = useState("");
   const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
   const [deliveryDate, setDeliveryDate] = useState(minDeliveryISO());
   const [deliveryWindow, setDeliveryWindow] = useState("Antes de 11:00 a.m.");
   const [notes, setNotes] = useState("");
@@ -61,9 +62,12 @@ export default function Page() {
   // Catalogo (ajusta precios/productos)
   const products = useMemo(function () {
     return [
-      { id: "pargo_entero", name: "Pargo Entero", desc: "Fresco, ideal parrilla", price: 10000, unit: "kg" },
-      { id: "corvina_clase_filete", name: "Corvina Clase Filete", desc: "Corte premium", price: 13300, unit: "kg" },
-      { id: "camaron_grande_pelado", name: "Camaron Grande Pelado", desc: "Sin cabeza, pelado", price: 23300, unit: "kg" }
+      { id: "corvina_pp_entera", name: "Corvina PP entera", desc: "Fresca", price: 7000, unit: "kg" },
+      { id: "corvina_pp_filete", name: "Corvina PP Filete", desc: "Fresca, fileteada", price: 11200, unit: "kg" },
+      { id: "corvina_clase_entera", name: "Corvina Clase Entera", desc: "Fresca", price: 5600, unit: "kg" },
+      { id: "corvina_clase_filete", name: "Corvina Clase Filete", desc: "Fresca, fileteada", price: 9100, unit: "kg" },
+      { id: "pargo_entero", name: "Pargo Entero para Plata", desc: "Fresco", price: 8400, unit: "kg" },
+      { id: "camaron_grande_entero", name: "Camarón Grande Entero", desc: "Fresco", price: 14000, unit: "kg" }
     ];
   }, []);
 
@@ -153,6 +157,7 @@ export default function Page() {
     if (orderId) msg += "ID: " + orderId + "\n";
     msg += "Restaurante: " + restaurant + "\n";
     if (contactName) msg += "Contacto: " + contactName + "\n";
+    if (address) msg += "Dirección: " + address + "\n";
     if (phone) msg += "Tel: " + phone + "\n";
     msg += "Entrega: " + deliveryDate + " (" + deliveryWindow + ")\n\n";
 
@@ -203,6 +208,7 @@ export default function Page() {
     var payload = {
       restaurant_name: String(restaurant).trim(),
       contact_name: contactName ? String(contactName).trim() : "",
+      address: address ? String(address).trim() : "",
       restaurant_phone: phone ? String(phone).trim() : "",
       delivery_date: String(deliveryDate),
       delivery_window: deliveryWindow ? String(deliveryWindow).trim() : "",
@@ -293,7 +299,7 @@ export default function Page() {
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Buscar producto (pargo, corvina, camaron...)"
+            placeholder="Buscar producto (corvina, pargo, camaron...)"
           />
         </div>
       </div>
@@ -328,6 +334,13 @@ export default function Page() {
               placeholder="Telefono"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
+            />
+             <input
+              className="input"
+              placeholder="Direccion"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              style={{ gridColumn: "1 / -1" }}
             />
             <input
               className="input"
