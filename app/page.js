@@ -299,7 +299,7 @@ export default function Page() {
             <h1>Mar Celajes</h1>
             <p>Sabores frescos del</p>
             <p>Golfo de Nicoya</p>
-            <p1>*Monteverde en proceso</p1>
+            <p1>*Monteverde en proceso </p1>
             <p1>de análisis</p1>
 
           </div>
