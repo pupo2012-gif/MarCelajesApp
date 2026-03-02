@@ -292,7 +292,8 @@ export default function Page() {
           <img className="logo" src="/logo-mar-celajes.png" alt="Mar Celajes" />
           <div className="brand">
             <h1>Mar Celajes</h1>
-            <p>Sabores frescos del Golfo de Nicoya</p>
+            <p>Sabores frescos del</p>
+            <p>Golfo de Nicoya</p>
           </div>
         </div>
         <div className="search">
