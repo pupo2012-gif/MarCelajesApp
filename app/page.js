@@ -62,11 +62,11 @@ export default function Page() {
   // Catalogo (ajusta precios/productos)
   const products = useMemo(function () {
     return [
-      { id: "corvina_pp_entera", name: "Corvina PP entera", desc: "Fresca", price: 7000, unit: "kg" },
-      { id: "corvina_pp_filete", name: "Corvina PP Filete", desc: "Fresca, fileteada", price: 11200, unit: "kg" },
-      { id: "corvina_clase_entera", name: "Corvina Clase Entera", desc: "Fresca", price: 5600, unit: "kg" },
-      { id: "corvina_clase_filete", name: "Corvina Clase Filete", desc: "Fresca, fileteada", price: 9100, unit: "kg" },
-      { id: "pargo_entero", name: "Pargo Entero para Plato", desc: "Fresco", price: 8400, unit: "kg" },
+      { id: "corvina_pp_entera", name: "Corvina PP entera", desc: "Fresca", price: 7200, unit: "kg" },
+      { id: "corvina_pp_filete", name: "Corvina PP Filete", desc: "Fresca, fileteada", price: 11400, unit: "kg" },
+      { id: "corvina_clase_entera", name: "Corvina Clase Entera", desc: "Fresca", price: 5800, unit: "kg" },
+      { id: "corvina_clase_filete", name: "Corvina Clase Filete", desc: "Fresca, fileteada", price: 9300, unit: "kg" },
+      { id: "pargo_entero", name: "Pargo Entero para Plato", desc: "Fresco", price: 8500, unit: "kg" },
       { id: "camaron_grande_entero", name: "Camarón Grande Entero", desc: "Fresco", price: 14000, unit: "kg" }
     ];
   }, []);
@@ -300,7 +300,7 @@ export default function Page() {
             <p>Sabores frescos del</p>
             <p>Golfo de Nicoya</p>
             <p1>(Monteverde en proceso</p1>
-            <p1>de análisis=</p1>
+            <p1>de análisis)</p1>
 
           </div>
         </div>
