@@ -130,84 +130,111 @@ export default function Page() {
     return msg;
   }
 
-  async function sendOrder() {
-    setStatusMsg(null);
-    var min = minDeliveryISO();
-    if (deliveryDate < min) {
-      setStatusMsg({
-        type: "err",
-        text: "La fecha de entrega minima es " + min + " (regla: despues de 2pm es pasado manana)."
-    });
-    return;
-    }
+async function sendOrder() {
+  setStatusMsg(null);
 
-
-    if (!restaurant.trim()) {
-      setStatusMsg({ type: "err", text: "Falta el nombre del restaurante." });
-      return;
-    }
-    if (!deliveryDate) {
-      setStatusMsg({ type: "err", text: "Falta la fecha de entrega." });
-      return;
-    }
-    if (cartLines.length === 0) {
-      setStatusMsg({ type: "err", text: "El carrito esta vacio." });
-      return;
-    }
-
-    const payload = {
-      restaurant_name: restaurant.trim(),
-      contact_name: contactName.trim(),
-      restaurant_phone: phone.trim(),
-      address: address.trim(),
-      delivery_date: deliveryDate + 2,
-      delivery_window: deliveryWindow.trim(),
-      notes: notes,
-      total_crc: total,
-      total_items: cartLines.reduce(function (s, it) {
-        return s + it.qty;
-      }, 0),
-      items: cartLines.map(function (it) {
-        return {
-          order_id: it.id,
-          name: it.name,
-          qty: it.qty,
-          price: it.price,
-          line_total: it.qty * it.price,
-        };
-      }),
-    };
-
-    setSending(true);
-
-    try {
-      const res = await fetch("/api/orders", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      const data = await res.json().catch(function () {
-        return null;
-      });
-
-      if (!res.ok || !data || !data.ok) {
-        const errText = (data && data.error) ? data.error : ("Error enviando pedido (HTTP " + res.status + ")");
-        setStatusMsg({ type: "err", text: errText });
-        return;
-      }
-
-      setStatusMsg({ type: "ok", text: "Pedido enviado correctamente. ID: " + (data.order_id || "OK") });
-
-      const waMsg = buildWhatsAppMessage();
-      const waUrl = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(waMsg);
-      window.open(waUrl, "_blank");
-    } catch (e) {
-      setStatusMsg({ type: "err", text: "NetworkError: no se pudo enviar. Revisar /api/orders y Apps Script." });
-    } finally {
-      setSending(false);
-    }
+  // Open WhatsApp window immediately to avoid popup blocking
+  var waWindow = null;
+  try {
+    waWindow = window.open("about:blank", "_blank");
+  } catch (e) {
+    waWindow = null;
   }
+
+  // Basic validations
+  if (!restaurant || !restaurant.trim()) {
+    if (waWindow && waWindow.close) waWindow.close();
+    setStatusMsg({ type: "err", text: "Falta el nombre del restaurante." });
+    return;
+  }
+  if (!deliveryDate) {
+    if (waWindow && waWindow.close) waWindow.close();
+    setStatusMsg({ type: "err", text: "Falta la fecha de entrega." });
+    return;
+  }
+  if (typeof minDate === "string" && deliveryDate < minDate) {
+    if (waWindow && waWindow.close) waWindow.close();
+    setStatusMsg({ type: "err", text: "Fecha minima permitida: " + minDate });
+    return;
+  }
+  if (!cartLines || cartLines.length === 0) {
+    if (waWindow && waWindow.close) waWindow.close();
+    setStatusMsg({ type: "err", text: "El carrito esta vacio." });
+    return;
+  }
+
+  // Build payload for proxy
+  var payload = {
+    restaurant_name: String(restaurant).trim(),
+    contact_name: contactName ? String(contactName).trim() : "",
+    restaurant_phone: phone ? String(phone).trim() : "",
+    delivery_date: String(deliveryDate),
+    delivery_window: deliveryWindow ? String(deliveryWindow).trim() : "",
+    notes: notes ? String(notes) : "",
+    total_crc: Number(total || 0),
+    total_items: cartLines.reduce(function (s, it) {
+      return s + Number(it.qty || 0);
+    }, 0),
+    items: cartLines.map(function (it) {
+      return {
+        id: it.id ? String(it.id) : "",
+        name: it.name ? String(it.name) : "",
+        unit: it.unit ? String(it.unit) : "",
+        qty: Number(it.qty || 0),
+        price: Number(it.price || 0),
+        line_total: Number(it.line_total || (Number(it.qty || 0) * Number(it.price || 0)) || 0)
+      };
+    })
+  };
+
+  setSending(true);
+
+  try {
+    var res = await fetch("/api/orders", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    var data = await res.json().catch(function () {
+      return null;
+    });
+
+    if (!res.ok || !data || data.ok !== true) {
+      var errText = (data && data.error) ? String(data.error) : ("Error enviando (HTTP " + res.status + ")");
+      if (waWindow && waWindow.close) waWindow.close();
+      setStatusMsg({ type: "err", text: errText });
+      return;
+    }
+
+    var orderId = data.order_id ? String(data.order_id) : "";
+    setStatusMsg({ type: "ok", text: "Pedido guardado correctamente. ID: " + (orderId || "OK") });
+
+    // Build WhatsApp URL after successful save
+    var waMsg = "";
+    try {
+      waMsg = buildWhatsAppMessage(orderId);
+    } catch (e2) {
+      waMsg = "Pedido - Mar Celajes";
+    }
+
+    var waUrl = "https://wa.me/" + String(WHATSAPP_NUMBER) + "?text=" + encodeURIComponent(waMsg);
+
+    // Redirect the already-opened window to WhatsApp
+    if (waWindow && waWindow.location) {
+      waWindow.location.href = waUrl;
+    } else {
+      // Fallback: navigate current tab if popup blocked
+      window.location.href = waUrl;
+    }
+  } catch (err) {
+    if (waWindow && waWindow.close) waWindow.close();
+    setStatusMsg({ type: "err", text: "Network error enviando pedido. Revisa /api/orders y Apps Script." });
+  } finally {
+    setSending(false);
+  }
+}
+
 
   return (
     <div style={{ padding: 24, fontFamily: "Arial", maxWidth: 820, margin: "0 auto" }}>
